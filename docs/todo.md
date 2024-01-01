@@ -1,5 +1,7 @@
 # Now
 
+- Convert to lpeg
+
 - Support sqlite "in" cluase with json_each
 - Support iter:clone()/recompile for
 
