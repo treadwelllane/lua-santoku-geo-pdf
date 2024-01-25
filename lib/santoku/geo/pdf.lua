@@ -3,7 +3,7 @@
 local zlib = require("zlib")
 local gen = require("santoku.gen")
 local vec = require("santoku.vector")
-local err = require("santoku.err")
+local check = require("santoku.check")
 local str = require("santoku.string")
 
 local M = {}
@@ -39,7 +39,7 @@ local M = {}
 --     might want to do
 
 M.extract_pdf_georefs = function (data)
-  return err.pwrap(function (check)
+  return check:wrap(function (check)
     local page = nil
     for d in data:gmatch("%b<>") do
       if d:match("Type/Page[%/%>]") then
@@ -99,7 +99,7 @@ M.extract_pdf_georefs = function (data)
               local dict = inflated:match("%b<>", first + offset)
               if dict then
                 local gpts = dict:match("GPTS(%b[])")
-                if err.pwrap(function (check)
+                if check:wrap(function (check)
                   local i = 1
                   gen.ipairs(gen.ivals(str.match(gpts:sub(2, #gpts - 1), "[^%s]+"))
                     :map(function (i)
